@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New User</title>
+    <style type="text/css">
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border-color: #ccc;
+        }
+
+        .tg td {
+            front-familly: Arial, sans-serif;
+            front-size: 14px;
+            padding: 10px 5px;
+            border-style: solid;
+            border-width: 1px;
+            overflow: hidden;
+            word-break: normal;
+            border-color: #ccc;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .tg th {
+            front-familly: Arial, sans-serif;
+            front-size: 14px;
+            padding: 10px 5px;
+            border-style: solid;
+            border-width: 1px;
+            overflow: hidden;
+            word-break: normal;
+            border-color: #ccc;
+            color: #333;
+            background-color: #f0f0f0;
+        }
+        .knopka{
+            position: fixed;
+            right: 0;
+            bottom: 97.6%;
+            background: #203D7888;
+            width: 100px;
+            height: 27px;
+            border-radius: 5px 5px 5px 5px;
+            border: 1px solid #CCC;
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/logout}"><button class="knopka">LOGOUT</button></a>
+<div align="center">
+    <h2>Регистрация</h2>
+    <form th:action="@{/create}" th:object="${user}" method="post">
+        <table border="1" cellpadding="5" class="tg">
+            <tr>
+                <td>Имя:</td>
+                <td><input type="text" th:field="*{firstName}"></td>
+            </tr>
+            <tr>
+                <td>Фамилия:</td>
+                <td><input type="text" th:field="*{lastName}"/></td>
+            </tr>
+            <tr>
+                <td>Имя пользователя:</td>
+                <td><input type="text" th:field="*{userName}"/></td>
+            </tr>
+            <tr>
+                <td>Пароль:</td>
+                <td><input type="text" th:field="*{password}"/></td>
+            </tr>
+
+            <input type="checkbox" name="checkBoxRoles" value="ROLE_USER"/>USER
+            <input type="checkbox" name="checkBoxRoles" value="ROLE_ADMIN"/>ADMIN
+            <br/>
+        </table>
+        <br/>
+        <td colspan="2"><input type="submit" value="Add"></td>
+        <br/>
+        <br/>
+    </form>
+</div>
+</body>
+</html>
