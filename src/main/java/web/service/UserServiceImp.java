@@ -5,14 +5,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.UserDao;
+import web.model.Role;
 import web.model.User;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImp implements UserService {
     private UserDao userDao;
     private PasswordEncoder passwordEncoder;
+    private RoleService roleService;
 
     @Autowired
     public void setUserDao(UserDao userDao) {
@@ -24,6 +28,11 @@ public class UserServiceImp implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
     @Override
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
@@ -31,8 +40,12 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public void addUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void addUser(User user, String[] checkBoxRoles) {
+        setPasswordEncoder(user);
+        Set<Role> roles = new HashSet<>();
+        for (String role : checkBoxRoles) {
+            roles.add(roleService.getRoleByName(role));
+        }
         userDao.addUser(user);
     }
 
@@ -43,8 +56,13 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void updateUser(User user, String[] checkBoxRoles) {
+        setPasswordEncoder(user);
+        Set<Role> roles = new HashSet<>();
+        for (String role : checkBoxRoles) {
+            roles.add(roleService.getRoleByName(role));
+        }
+        user.setRoles(roles);
         userDao.updateUser(user);
     }
 
@@ -52,6 +70,17 @@ public class UserServiceImp implements UserService {
     @Transactional
     public void deleteUser(long id) {
         userDao.deleteUser(id);
+    }
+
+    @Override
+    @Transactional
+    public void initialUser(User user) {
+        userDao.addUser(user);
+    }
+
+    @Override
+    public void setPasswordEncoder(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
     @Override

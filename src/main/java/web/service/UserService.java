@@ -8,9 +8,11 @@ import java.util.List;
 @Service
 public interface UserService {
     List<User> getAllUsers();
-    void addUser(User user);
+    void addUser(User user, String[] checkboxroles);
     User getUserById(long id);
-    void updateUser(User user);
+    void updateUser(User user, String[] checkboxroles);
     void deleteUser(long id);
+    public void initialUser(User user);
+    void setPasswordEncoder(User user);
     User getUserByName(String name);
 }
