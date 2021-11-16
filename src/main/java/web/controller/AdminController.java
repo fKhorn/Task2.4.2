@@ -11,12 +11,10 @@ import web.service.*;
 @Controller
 public class AdminController {
     private UserService userService;
-    private RoleService roleService;
 
     @Autowired
-    public void setUserService(UserService userService, RoleService roleService) {
+    public void setUserService(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
     @GetMapping(value = "/admin")

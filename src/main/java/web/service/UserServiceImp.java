@@ -46,6 +46,7 @@ public class UserServiceImp implements UserService {
         for (String role : checkBoxRoles) {
             roles.add(roleService.getRoleByName(role));
         }
+        user.setRoles(roles);
         userDao.addUser(user);
     }
 

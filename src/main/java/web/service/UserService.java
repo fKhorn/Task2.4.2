@@ -12,7 +12,7 @@ public interface UserService {
     User getUserById(long id);
     void updateUser(User user, String[] checkboxroles);
     void deleteUser(long id);
-    public void initialUser(User user);
+    void initialUser(User user);
     void setPasswordEncoder(User user);
     User getUserByName(String name);
 }
