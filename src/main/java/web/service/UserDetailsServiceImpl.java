@@ -5,30 +5,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import web.dao.UserDao;
-import web.dao.UserDaoImp;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private UserDao userDao = new UserDaoImp();
-    private RoleService roleService = new RoleServiceImpl();
+    private UserService userService;
 
     @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    @Autowired
-    public void setRoleService(RoleService roleService) {
-        this.roleService = roleService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userDao.getUserByName(s);
+        return userService.getUserByName(s);
     }
-
 
 }

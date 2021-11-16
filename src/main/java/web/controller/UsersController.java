@@ -3,15 +3,11 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import web.model.Role;
 import web.model.User;
-import web.service.RoleService;
-import web.service.RoleServiceImpl;
-import web.service.UserService;
-import web.service.UserServiceImp;
+import web.service.*;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
@@ -19,8 +15,8 @@ import java.util.Set;
 
 @Controller
 public class UsersController {
-    private UserService userService = new UserServiceImp();
-    private RoleService roleService = new RoleServiceImpl();
+    private UserService userService;
+    private RoleService roleService;
 
     @Autowired
     public void setUserService(UserService userService, RoleService roleService) {
@@ -29,7 +25,6 @@ public class UsersController {
     }
 
     @PostConstruct
-    @Transactional
     public void setDefaultUsers() {
         Set<Role> roles = new HashSet<>();
         roleService.addRole(new Role("ROLE_USER"));
